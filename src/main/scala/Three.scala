@@ -2,6 +2,7 @@ package dev.scartiloffista
 
 import utils.ReadFile
 
+import scala.annotation.tailrec
 import scala.util.control.Breaks.{break, breakable}
 
 
@@ -13,22 +14,32 @@ object Three extends App {
     }
   }
 
-//  private def filterCO2(instrs: Seq[String], i: Int): Seq[String] = {
-//    val mask2 = createMask(instrs)
-//    val maskCO2 = mask2.map(_ < 0).map(if (_) 1 else 0)
-//    instrs.filter(x => x(i).toString.toInt == maskCO2(i))
-//  }
-//
-//  private def filterOxygen(instrs: Seq[String], i: Int): Seq[String] = {
-//    val mask2 = createMask(instrs)
-//    val maskOxygen = mask2.map(_ >= 0).map(if (_) 1 else 0)
-//    instrs.filter(x => x(i).toString.toInt == maskOxygen(i))
-//  }
+
+  @tailrec
+  def getOxygen(instrs: Seq[String], i: Int): Int = {
+    val mask2 = createMask(instrs)
+    val maskOxygen = mask2.map(_ >= 0).map(if (_) 1 else 0)
+    val filtered = instrs.filter(x => x(i).toString.toInt == maskOxygen(i))
+    filtered.length match {
+      case 1 => Integer.parseInt(filtered.head, 2)
+      case _ => getOxygen(filtered, i+1)
+    }
+  }
+
+  @tailrec
+  def getCO2(instrs: Seq[String], i: Int): Int = {
+    val mask2 = createMask(instrs)
+    val maskCO2 = mask2.map(_ < 0).map(if (_) 1 else 0)
+    val filtered = instrs.filter(x => x(i).toString.toInt == maskCO2(i))
+    filtered.length match {
+      case 1 => Integer.parseInt(filtered.head, 2)
+      case _ => getCO2(filtered, i+1)
+    }
+  }
 
   val instrs = ReadFile.getLines(3)
   val len = instrs.head.length
   val vals = createMask(instrs)
-  // refactor with fold
 
   val gammaStr = vals.foldLeft("")((s, c) => if (c > 0) s.concat("1") else s.concat("0"))
   val epsilonStr = gammaStr.map(x => (1 - x.toString.toInt).toString).mkString("")
@@ -36,33 +47,8 @@ object Three extends App {
   val epsilon = Integer.parseInt(epsilonStr, 2)
   val gamma = Integer.parseInt(gammaStr, 2)
 
-  //
-  var instrs2 = instrs
-  //
-  breakable {
-    for (i <- 0 until len) {
-      val mask2 = createMask(instrs2)
-      val maskOxygen = mask2.map(_ >= 0).map(if (_) 1 else 0)
-      instrs2 = instrs2.filter(x => x(i).toString.toInt == maskOxygen(i))
-      if (instrs2.length == 1) {
-        break
-      }
-    }
-  }
-  val oxygen = Integer.parseInt(instrs2.head, 2)
-
-  var instrs3 = instrs
-
-  breakable {
-    for (i <- 0 until len) {
-      val mask2 = createMask(instrs3)
-      val maskCO2 = mask2.map(_ < 0).map(if (_) 1 else 0)
-      instrs3 = instrs3.filter(x => x(i).toString.toInt == maskCO2(i))
-      if (instrs3.length == 1)
-        break
-    }
-  }
-  val CO2 = Integer.parseInt(instrs3.head, 2)
+  val oxygen = getOxygen(instrs, 0)
+  val CO2 = getCO2(instrs, 0)
 
   println(epsilon * gamma)
   println(CO2 * oxygen)
