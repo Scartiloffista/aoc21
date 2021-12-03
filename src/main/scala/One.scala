@@ -1,4 +1,4 @@
-package org.scartiloffista
+package dev.scartiloffista
 
 import utils.ReadFile
 
