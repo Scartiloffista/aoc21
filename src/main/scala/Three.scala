@@ -1,10 +1,6 @@
 package dev.scartiloffista
-
 import utils.ReadFile
-
 import scala.annotation.tailrec
-import scala.util.control.Breaks.{break, breakable}
-
 
 object Three extends App {
 
@@ -14,7 +10,6 @@ object Three extends App {
     }
   }
 
-
   @tailrec
   def getOxygen(instrs: Seq[String], i: Int): Int = {
     val mask2 = createMask(instrs)
@@ -22,7 +17,7 @@ object Three extends App {
     val filtered = instrs.filter(x => x(i).toString.toInt == maskOxygen(i))
     filtered.length match {
       case 1 => Integer.parseInt(filtered.head, 2)
-      case _ => getOxygen(filtered, i+1)
+      case _ => getOxygen(filtered, i + 1)
     }
   }
 
@@ -33,7 +28,7 @@ object Three extends App {
     val filtered = instrs.filter(x => x(i).toString.toInt == maskCO2(i))
     filtered.length match {
       case 1 => Integer.parseInt(filtered.head, 2)
-      case _ => getCO2(filtered, i+1)
+      case _ => getCO2(filtered, i + 1)
     }
   }
 
@@ -52,6 +47,5 @@ object Three extends App {
 
   println(epsilon * gamma)
   println(CO2 * oxygen)
-
 
 }
