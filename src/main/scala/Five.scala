@@ -18,10 +18,10 @@ object Five extends App {
     }
   }
 
-  def checkCovers(x: Int, y: Int, coordsP1: Seq[(Int, Int, Int, Int)]) = {
-    val equations = coordsP1.map(x => getEquation(x._1, x._2, x._3, x._4))
-    val covers = equations.map(fn => fn(x, y)).count(_ == true)
-    covers
+  def checkCovers(x: Int, y: Int, coordsP1: Seq[(Int, Int, Int, Int)]): Int = {
+    coordsP1
+      .map(x => getEquation(x._1, x._2, x._3, x._4))
+      .map(fn => fn(x, y)).count(_ == true)
   }
 
   var lines = ReadFile.getLines(5)
@@ -30,7 +30,6 @@ object Five extends App {
 
   val max_x = (coords.map(_._1) ++ coords.map(_._3)).max
   val max_y = (coords.map(_._2) ++ coords.map(_._4)).max
-
 
   val coordsP1 = coords//.filter(c => c._1 == c._3 || c._2 == c._4)
 
