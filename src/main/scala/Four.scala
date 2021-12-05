@@ -1,4 +1,6 @@
-import dev.scartiloffista.utils.ReadFile
+package dev.scartiloffista
+
+import utils.ReadFile
 
 import scala.collection.mutable.ListBuffer
 
@@ -19,18 +21,18 @@ object Four extends App {
   }
 
   def checkIfWin(tables: Array[Array[Array[String]]]) = {
-    tables.filter(table => (table.exists(row => row.mkString("").count(_ == 'x') == 5) ||
+    tables.filter(table => table.exists(row => row.mkString("").count(_ == 'x') == 5) ||
       (0 until 5).exists(i => table.count(row => row(i).contains("x")) == 5)
-      )
     )
   }
+
   var winsList = new ListBuffer[Int]
   for (x <- toDraws) {
     tables = markNumbers(tables, x)
 
     val wins = checkIfWin(tables)
     tables = tables.filter(
-      table => ! (table.exists(row => row.mkString("").count(_ == 'x') == 5) ||
+      table => !(table.exists(row => row.mkString("").count(_ == 'x') == 5) ||
         (0 until 5).exists(i => table.count(row => row(i).contains("x")) == 5)
         )
     )

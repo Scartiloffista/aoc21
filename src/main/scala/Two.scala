@@ -2,7 +2,6 @@ package dev.scartiloffista
 
 import utils.ReadFile
 
-
 object Two extends App {
   val regexp = """^(.*) (.*)$""".r
   val instrs = ReadFile.getLines(2).map { case regexp(dir, n) => (dir, n.toInt) }
