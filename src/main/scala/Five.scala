@@ -13,8 +13,8 @@ object Five extends App {
       val b = x1-x2
       val c = a*x1 + b*y1
       (a*x + b*y) == c &&
-        ((x1 to x2).contains(x) || (x2 to x1).contains(x)) &&
-        ((y1 to y2).contains(y) || (y2 to y1).contains(y))
+        (((x1 <= x) && (x <= x2)) || ((x2 <= x) && (x <= x1))) &&
+        (((y1 <= y) && (y <= y2)) || ((y2 <= y) && (y <= y1)))
     }
   }
 
