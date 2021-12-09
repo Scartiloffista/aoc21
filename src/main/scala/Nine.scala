@@ -8,12 +8,15 @@ import scala.language.postfixOps
 object Nine extends App {
 
   val input = ReadFile.getLines(9).map(_.split("")).map(_.map(_.toInt))
-
   val indices = input.indices.flatMap { y => input.head.indices.map { x => ((x, y), input(y)(x)) } }.toMap
 
-  val p1 = indices.filter(x => findAMin(x, indices)).map(_._2 + 1).sum
-  val startPositionsP2 = indices.filter(x => findAMin(x, indices))
-  val p2 = startPositionsP2.map(x => bfs(x._1, indices)).toList.sorted.reverse.slice(0, 3).product
+  val mins = indices.filter(x => findAMin(x, indices))
+
+  val p1 = mins.map(_._2 + 1).sum
+  val p2 = mins.map(x => bfs(x._1, indices)).toList.sorted.reverse.slice(0, 3).product
+
+  println(p1)
+  println(p2)
 
   def findAMin(i: ((Int, Int), Int), indices: Map[(Int, Int), Int]): Boolean = {
     val (x, y) = i._1
@@ -44,7 +47,4 @@ object Nine extends App {
     }
     mappingVisited.values.count(_ == false)
   }
-
-  println(p1)
-  println(p2)
 }
