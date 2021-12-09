@@ -18,13 +18,13 @@ object Eight extends App {
     val eight = signal.filter(_.length == 7).head
 
     // |x| == 6
-    val nine = signal.filter(x => x.toSet.intersect(four.toSet).size == 4 && x.toSet.intersect(seven.toSet).size == 3 && x.length == 6).head
-    val zero = signal.filter(x => x.length == 6 && x != nine && x.toSet.intersect(one.toSet).size == 2).head
+    val nine = signal.filter(x => x.length == 6 && x.intersect(four).length == 4 && x.intersect(seven).length == 3).head
+    val zero = signal.filter(x => x.length == 6 && x != nine && x.intersect(one).length == 2).head
     val six  = signal.filter(x => x.length == 6 && x != nine && x != zero).head
 
     // |x| == 5
-    val three = signal.filter(x => x.length == 5 && x.toSet.intersect(one.toSet).size == 2).head
-    val five  = signal.filter(x => x.length == 5 && x.toSet.intersect(nine.toSet).size == 5 && x != three).head
+    val three = signal.filter(x => x.length == 5 && x.intersect(one).length == 2).head
+    val five  = signal.filter(x => x.length == 5 && x.intersect(nine).length == 5 && x != three).head
     val two   = signal.filter(x => x.length == 5 && x != five && x != three).head
 
 
@@ -50,8 +50,7 @@ object Eight extends App {
   val p1 = results.map(_.count(x=> x == 1 || x == 4 || x == 7 || x == 8)).sum
   val p2 = results.map(x => x.mkString("").toInt).sum
 
-  println(p2)
-
   println(p1)
+  println(p2)
 
 }
