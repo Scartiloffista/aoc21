@@ -18,9 +18,7 @@ object Ten extends App {
 
   @tailrec
   def fn(str: String, open: String): Option[Int] = {
-
     val mapping = Map('(' -> ')', '[' -> ']', '{' -> '}', '<' -> '>')
-
     (str, open) match {
       case ("", _) => None
       case _ => str.head match {
@@ -34,17 +32,11 @@ object Ten extends App {
     }
   }
 
-  def scoringP2(open2: String): Long = {
-    val scoring = Map(')' -> 1, ']' -> 2, '}' -> 3, '>' -> 4)
-    open2.foldLeft(0L) { (acc, char) => 5 * acc + scoring(char) }
-
-  }
+  def scoringP2(open2: String): Long = open2.foldLeft(0L)((acc, char) => 5 * acc + Map(')' -> 1, ']' -> 2, '}' -> 3, '>' -> 4)(char))
 
   @tailrec
   def fn2(str: String, open: String, acc: Long): Long = {
-
     val mapping = Map('(' -> ')', '[' -> ']', '{' -> '}', '<' -> '>')
-
     (str, open) match {
       case ("", open2) => scoringP2(open2)
       case _ => str.head match {
