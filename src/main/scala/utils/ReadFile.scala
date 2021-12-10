@@ -1,4 +1,5 @@
-package dev.scartiloffista.utils
+package dev.scartiloffista
+package utils
 
 import scala.io.Source
 

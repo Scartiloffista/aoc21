@@ -26,7 +26,7 @@ object Four extends App {
     )
   }
 
-  var winsList = new ListBuffer[Int]
+  val winsList = new ListBuffer[Int]
   for (x <- toDraws) {
     tables = markNumbers(tables, x)
 
@@ -38,7 +38,6 @@ object Four extends App {
     )
     winsList.addAll(wins.map(win => win.flatten.filter(!_.endsWith("x")).map(_.toInt).sum * x.toInt))
 
-    true
   }
   winsList.foreach(println)
 }

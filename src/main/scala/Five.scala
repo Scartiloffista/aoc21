@@ -24,7 +24,7 @@ object Five extends App {
       .map(fn => fn(x, y)).count(_ == true)
   }
 
-  var lines = ReadFile.getLines(5)
+  val lines = ReadFile.getLines(5)
   val regexp = """^(\d+),(\d+) -> (\d+),(\d+)$""".r
   val coords = lines.map{case regexp(x1,y1,x2,y2) => (x1.toInt, y1.toInt, x2.toInt, y2.toInt) }
 

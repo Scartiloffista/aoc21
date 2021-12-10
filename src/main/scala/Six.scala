@@ -23,10 +23,10 @@ object Six extends App {
   }
 
   val input = ReadFile.getLines(6).head.split(",").map(_.toInt)
-  var dict = (0 to 8).map { x => x -> input.count(y => y == x).toLong }.toMap
+  val dict = (0 to 8).map { x => x -> input.count(y => y == x).toLong }.toMap
 
-  var result1 = iterateDict(dict, 80)
-  var result2 = iterateDict(dict, 256)
+  val result1 = iterateDict(dict, 80)
+  val result2 = iterateDict(dict, 256)
 
   println(result1)
   println(result2)
