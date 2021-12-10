@@ -7,10 +7,9 @@ import scala.language.postfixOps
 
 object Nine extends App {
 
-  val input = ReadFile.getLines(9).map(_.split("")).map(_.map(_.toInt))
-  val indices = input.indices.flatMap { y => input.head.indices.map { x => ((x, y), input(y)(x)) } }.toMap
-
-  val mins = indices.filter(x => findAMin(x, indices))
+  val input: Seq[Array[Int]]        = ReadFile.getLines(9).map(_.split("")).map(_.map(_.toInt))
+  val indices: Map[(Int, Int), Int] = input.indices.flatMap(y => input.head.indices.map(x => ((x, y), input(y)(x)))).toMap
+  val mins: Map[(Int, Int), Int]    = indices.filter(x => findAMin(x, indices))
 
   val p1 = mins.map(_._2 + 1).sum
   val p2 = mins.map(x => bfs(x._1, indices)).toList.sorted.reverse.slice(0, 3).product
@@ -20,12 +19,9 @@ object Nine extends App {
 
   def findAMin(i: ((Int, Int), Int), indices: Map[(Int, Int), Int]): Boolean = {
     val (x, y) = i._1
-    val value = i._2
+    val v = i._2
 
-    val f1 = (v: Int) => Seq((x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y)).map(x => indices.getOrElse(x, Int.MaxValue) > v)
-
-    f1(value).forall(_ == true)
-
+    Seq((x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y)).map(x => indices.getOrElse(x, Int.MaxValue) > v).forall(_ == true)
   }
 
   def bfs(start: (Int, Int), indices: Map[(Int, Int), Int]) = {
