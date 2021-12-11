@@ -23,10 +23,12 @@ object Ten extends App {
       case ("", _) => None
       case _ => str.head match {
         // no way to check if keys contain, i guess
-        case strHead if mapping.keys.count(_ == strHead) > 0 => fn(str.tail, mapping(strHead) + open)
-        case strHead => open.head match {
-          case openHead if openHead.equals(strHead) => fn(str.tail, open.tail)
-          case _ => Some(scoringP1(str.head))
+        case strHead if mapping.keys.count(_ == strHead) > 0
+          => fn(str.tail, mapping(strHead) + open)
+        case strHead =>
+          open.head match {
+            case openHead if openHead.equals(strHead) => fn(str.tail, open.tail)
+            case _ => Some(scoringP1(str.head))
         }
       }
     }
