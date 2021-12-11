@@ -1,5 +1,7 @@
 package dev.scartiloffista
+
 import utils.ReadFile
+
 import scala.annotation.tailrec
 import scala.language.postfixOps
 
@@ -18,14 +20,11 @@ object Eleven extends App {
   @tailrec
   def expand(input: Map[(Int, Int), Int], glowing: Set[(Int, Int)], toIgnore: Set[(Int, Int)]): Map[(Int, Int), Int] = {
 
-    if(glowing.isEmpty)
+    if (glowing.isEmpty)
       return input
 
     val neigh = glowing.toSeq.flatMap(x => getNeigh(x, input)).filter(x => input.contains(x))
-    var step = input
-    for (x <- neigh) {
-      step = step + (x -> (step(x) + 1))
-    }
+    val step = neigh.foldLeft(input)((step, x) => step + (x -> (step(x) + 1)))
     val glowed = toIgnore concat glowing
     val newGlowing = step.filter(_._2 > 9).filter(x => !glowed.contains(x._1)).keys.toSet
 
@@ -41,17 +40,13 @@ object Eleven extends App {
       acc
     else {
       val firstStep = input map { case (k, v) => k -> (v + 1) }
-
       val glowing = firstStep filter (_._2 > 9) keys
-
-      def fn(i: Int): Int = if (i <= 9) i else 0
-
       val secondStep = expand(firstStep, glowing.toSet, glowing.toSet.empty)
       val count = secondStep.count(_._2 > 9)
-      val finalStep = secondStep.map { case (k, v) => k -> fn(v) }
+      val finalStep = secondStep.map { case (k, v) => k -> (if (v <= 9) v else 0) }
 
-      if(finalStep.forall(x => x._2 == 0)) // for a stupid p2
-        println(s"STEP: $step" )
+      if (finalStep.forall(x => x._2 == 0)) // for a stupid p2
+        println(s"STEP: $step")
       p1(finalStep, step + 1, acc + count)
     }
   }
