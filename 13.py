@@ -1,7 +1,7 @@
 
 import pathlib
 
-path = pathlib.Path('.').parent / "13.txt"
+path = pathlib.Path('.').parent / "12.txt"
 with open(path, "r") as f:
     data = f.read()
 
@@ -36,10 +36,10 @@ for axis, value in splits:
     value = int(value)
     if axis == "x":
         new_dots = {get_new_pos_x(x,y, value) for x,y in new_dots}
-        new_dots = {(x,y) for x,y in new_dots if x != value}
+        new_dots = {(x,y) for x,y in new_dots}
     else:
         new_dots = {get_new_pos_y(x,y, value) for x,y in new_dots}
-        new_dots = {(x,y) for x,y in new_dots if y != value}
+        new_dots = {(x,y) for x,y in new_dots}
     if flag:
         print(len(new_dots))
         flag = False
