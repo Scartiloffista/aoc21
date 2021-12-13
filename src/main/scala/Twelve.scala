@@ -5,11 +5,8 @@ import utils.ReadFile
 object Twelve extends App {
 
   val startTimeMillis = System.currentTimeMillis()
-
   val input = ReadFile.getLines(12).map(_.split("-")).toArray.map { case Array(f1, f2) => (f1, f2) }
-
   val mapping = input ++ input.map(x => (x._2, x._1))
-
 
   def p1(mapping: Array[(String, String)], visited: Seq[String], node: String): Seq[Seq[String]] = {
 
