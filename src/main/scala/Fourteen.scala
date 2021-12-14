@@ -12,7 +12,7 @@ object Fourteen extends App {
   val rules: Map[String, String]     = input.split("\n\n")(1).split("\n").map(x => x.split(" -> ")).map(x => x(0) -> x(1)).toMap
   val occurrences: Map[String, Long] = startString.sliding(2).map(x => x -> startString.sliding(2).toList.count(_ == x).toLong).toMap
   val finalMap: Map[String, Long]    = newP2(occurrences, rules, 1)
-  val charCount                      = finalMap.groupBy(_._1(1)).view.mapValues(_.values.sum).toMap // counting only second letter of final pairs
+  val charCount: Map[Char, Long]     = finalMap.groupBy(_._1(1)).view.mapValues(_.values.sum).toMap // counting only second letter of final pairs
 
   println(charCount.values.max - charCount.values.min)
 
